@@ -194,10 +194,11 @@ else
 endif
 
 presetdir = join_paths(get_option('datadir'), 'gstreamer-' + api_version, 'presets')
+plugins_component = component('plugins')
 subdir('gst')
 subdir('ext')
 subdir('tests')
 subdir('po')
 
-python3 = import('python3').find_python()
+python3 = find_program('python3')
 run_command(python3, '-c', 'import shutil; shutil.copy("hooks/pre-commit.hook", ".git/hooks/pre-commit")')

@@ -26,5 +26,6 @@ if have_sidplay
     include_directories : [configinc],
     dependencies : [gstaudio_dep, sidplay_dep],
     install : true,
-    install_dir : plugins_install_dir)
+    install_dir : plugins_install_dir,
+    components: component('sideplay'))
 endif

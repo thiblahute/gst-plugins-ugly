@@ -1,12 +1,16 @@
-a52_dep = cc.find_library('a52', required : false)
+a52_comp = component('a52dec')
+a52_dep = cc.find_dependency('a52', libs: 'a52',
+  headers_symbols: [['a52dec/a52.h', 'a52_init']],
+  prefix : '#include <stdint.h>',
+  components: a52_comp,
+  required : false)
 
-if a52_dep.found() and cc.has_header_symbol('a52dec/a52.h', 'a52_init', prefix : '#include <stdint.h>')
-  a52dec = library('gsta52dec',
-    'gsta52dec.c',
-    c_args : ugly_args,
-    include_directories : [configinc],
-    dependencies : [gstaudio_dep, orc_dep, a52_dep],
-    install : true,
-    install_dir : plugins_install_dir,
-  )
-endif
+a52dec = library('gsta52dec',
+  'gsta52dec.c',
+  c_args : ugly_args,
+  include_directories : [configinc],
+  dependencies : [gstaudio_dep, orc_dep, a52_dep],
+  install : true,
+  install_dir : plugins_install_dir,
+  components: a52_comp
+)
