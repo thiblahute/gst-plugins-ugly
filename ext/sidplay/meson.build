@@ -14,12 +14,13 @@ if have_cxx and not get_option('sidplay').disabled()
 endif
 
 if have_sidplay
-  shared_module('gstsid', 'gstsiddec.cc',
+  sid = shared_module('gstsid', 'gstsiddec.cc',
     cpp_args : ugly_args,
     include_directories : [configinc],
     dependencies : [gstaudio_dep, sidplay_dep],
     install : true,
     install_dir : plugins_install_dir)
+  plugins += [sid]
 elif get_option('sidplay').enabled()
   error('sidplay plugin enabled but dependencies not found')
 endif

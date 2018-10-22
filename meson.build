@@ -24,6 +24,7 @@ gst_req = '>= @0@.@1@.0'.format(gst_version_major, gst_version_minor)
 api_version = '1.0'
 
 plugins_install_dir = '@0@/gstreamer-1.0'.format(get_option('libdir'))
+plugins = []
 
 cc = meson.get_compiler('c')
 if have_cxx
@@ -245,6 +246,7 @@ if get_option('default_library') == 'shared'
   plugins_pkgconfig_install_dir = disabler()
 endif
 
+python3 = import('python').find_installation()
 subdir('gst')
 subdir('ext')
 subdir('tests')
@@ -254,8 +256,8 @@ if find_program('xgettext', required : get_option('nls')).found()
   cdata.set('ENABLE_NLS', 1)
   subdir('po')
 endif
+subdir('docs')
 
 configure_file(output : 'config.h', configuration : cdata)
 
-python3 = import('python').find_installation()
 run_command(python3, '-c', 'import shutil; shutil.copy("hooks/pre-commit.hook", ".git/hooks/pre-commit")')
